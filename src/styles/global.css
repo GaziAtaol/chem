@@ -27,6 +27,27 @@ body {
   justify-content: space-between;
 }
 
+.code-toggle {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-size: 14px;
+}
+
+.code-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+}
+
+.app__main--with-code {
+  grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.8fr) minmax(300px, 1fr);
+}
+
 .app__header h1 {
   font-size: clamp(28px, 4vw, 40px);
   margin: 0 0 8px;
@@ -279,4 +300,64 @@ body {
   margin: 0;
   color: #3d4150;
   line-height: 1.6;
+}
+
+.code-viewer {
+  background-color: #1e1e1e;
+  border-radius: 20px;
+  padding: 24px;
+  color: #d4d4d4;
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+.code-viewer__header h3 {
+  margin: 0 0 8px;
+  color: #569cd6;
+  font-size: 18px;
+}
+
+.code-viewer__header p {
+  margin: 0 0 20px;
+  color: #9cdcfe;
+  font-size: 14px;
+}
+
+.code-section {
+  margin-bottom: 24px;
+}
+
+.code-section h4 {
+  margin: 0 0 12px;
+  color: #dcdcaa;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.code-block {
+  background-color: #2d2d30;
+  border-radius: 8px;
+  padding: 16px;
+  overflow-x: auto;
+  border: 1px solid #3e3e42;
+  margin: 0;
+}
+
+.code-block code {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #d4d4d4;
+  white-space: pre;
+}
+
+@media (max-width: 1400px) {
+  .app__main--with-code {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+  
+  .app__code {
+    order: 3;
+  }
 }
