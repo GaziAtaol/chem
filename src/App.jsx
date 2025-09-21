@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react';
 import PeriodicTable from './components/PeriodicTable.jsx';
 import ElementDetails from './components/ElementDetails.jsx';
+import ThemeToggle from './components/ThemeToggle.jsx';
 import { elements } from './data/elements.js';
+import { useTheme } from './hooks/useTheme.js';
 
 const categoryLabels = {
   'diatomic nonmetal': 'Diatomik Ametal',
@@ -21,6 +23,7 @@ const categoryLabels = {
 
 export default function App() {
   const [selectedNumber, setSelectedNumber] = useState(1);
+  const { theme, toggleTheme } = useTheme();
 
   const selectedElement = useMemo(
     () => elements.find((element) => element.number === selectedNumber),
@@ -34,6 +37,7 @@ export default function App() {
           <h1>Kimya Çalışma Alanı</h1>
           <p>Periyodik tablodaki herhangi bir elementi seçerek temel bilgilerini keşfedin.</p>
         </div>
+        <ThemeToggle theme={theme} onToggle={toggleTheme} />
       </header>
 
       <main className="app__main">
