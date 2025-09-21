@@ -27,18 +27,24 @@ const categoryLabels = {
   'actinide': 'Aktinit'
 };
 
-export default function PeriodicTable({ elements, selectedNumber, onSelect }) {
+export default function PeriodicTable({ elements, allElements, selectedNumber, onSelect, searchTerm, filterCategory }) {
   return (
     <div className="periodic-table">
       <div className="periodic-table__grid">
-        {elements.map((element) => (
-          <ElementButton
-            key={element.number}
-            element={element}
-            isSelected={element.number === selectedNumber}
-            onSelect={onSelect}
-          />
-        ))}
+        {allElements.map((element) => {
+          const isVisible = elements.includes(element);
+          const isFiltered = !isVisible && (searchTerm || filterCategory);
+          
+          return (
+            <ElementButton
+              key={element.number}
+              element={element}
+              isSelected={element.number === selectedNumber}
+              isFiltered={isFiltered}
+              onSelect={onSelect}
+            />
+          );
+        })}
       </div>
       <div className="periodic-table__legend">
         {categoryOrder.map((category) => (
@@ -58,6 +64,13 @@ PeriodicTable.propTypes = {
       number: PropTypes.number.isRequired
     })
   ).isRequired,
+  allElements: PropTypes.arrayOf(
+    PropTypes.shape({
+      number: PropTypes.number.isRequired
+    })
+  ).isRequired,
   selectedNumber: PropTypes.number.isRequired,
-  onSelect: PropTypes.func.isRequired
+  onSelect: PropTypes.func.isRequired,
+  searchTerm: PropTypes.string,
+  filterCategory: PropTypes.string
 };

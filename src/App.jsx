@@ -23,11 +23,25 @@ const categoryLabels = {
 export default function App() {
   const [selectedNumber, setSelectedNumber] = useState(1);
   const [showCode, setShowCode] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterCategory, setFilterCategory] = useState('');
 
   const selectedElement = useMemo(
     () => elements.find((element) => element.number === selectedNumber),
     [selectedNumber]
   );
+
+  const filteredElements = useMemo(() => {
+    return elements.filter((element) => {
+      const matchesSearch = searchTerm === '' || 
+        element.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        element.symbol.toLowerCase().includes(searchTerm.toLowerCase());
+      
+      const matchesCategory = filterCategory === '' || element.category === filterCategory;
+      
+      return matchesSearch && matchesCategory;
+    });
+  }, [searchTerm, filterCategory]);
 
   return (
     <div className="app">
@@ -47,10 +61,43 @@ export default function App() {
 
       <main className={`app__main ${showCode ? 'app__main--with-code' : ''}`}>
         <section className="app__table">
+          <div className="search-controls">
+            <div className="search-input-container">
+              <input
+                type="text"
+                placeholder="Element ara (isim veya sembol)..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="search-input"
+              />
+              {searchTerm && (
+                <button
+                  onClick={() => setSearchTerm('')}
+                  className="search-clear"
+                  title="Aramayı temizle"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+            <select
+              value={filterCategory}
+              onChange={(e) => setFilterCategory(e.target.value)}
+              className="category-filter"
+            >
+              <option value="">Tüm kategoriler</option>
+              {Object.entries(categoryLabels).map(([key, label]) => (
+                <option key={key} value={key}>{label}</option>
+              ))}
+            </select>
+          </div>
           <PeriodicTable
-            elements={elements}
+            elements={filteredElements}
+            allElements={elements}
             selectedNumber={selectedNumber}
             onSelect={setSelectedNumber}
+            searchTerm={searchTerm}
+            filterCategory={filterCategory}
           />
         </section>
         <aside className="app__info">
