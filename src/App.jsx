@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import PeriodicTable from './components/PeriodicTable.jsx';
 import ElementDetails from './components/ElementDetails.jsx';
+import CodeViewer from './components/CodeViewer.jsx';
 import { elements } from './data/elements.js';
 
 const categoryLabels = {
@@ -21,6 +22,7 @@ const categoryLabels = {
 
 export default function App() {
   const [selectedNumber, setSelectedNumber] = useState(1);
+  const [showCode, setShowCode] = useState(false);
 
   const selectedElement = useMemo(
     () => elements.find((element) => element.number === selectedNumber),
@@ -34,9 +36,16 @@ export default function App() {
           <h1>Kimya Çalışma Alanı</h1>
           <p>Periyodik tablodaki herhangi bir elementi seçerek temel bilgilerini keşfedin.</p>
         </div>
+        <button 
+          className="code-toggle"
+          onClick={() => setShowCode(!showCode)}
+          title={showCode ? "Kod görünümünü gizle" : "Kod görünümünü göster"}
+        >
+          {showCode ? "📱 Normal Görünüm" : "💻 Kod Görünümü"}
+        </button>
       </header>
 
-      <main className="app__main">
+      <main className={`app__main ${showCode ? 'app__main--with-code' : ''}`}>
         <section className="app__table">
           <PeriodicTable
             elements={elements}
@@ -47,6 +56,11 @@ export default function App() {
         <aside className="app__info">
           <ElementDetails element={selectedElement} categoryLabels={categoryLabels} />
         </aside>
+        {showCode && (
+          <section className="app__code">
+            <CodeViewer selectedElement={selectedElement} />
+          </section>
+        )}
       </main>
     </div>
   );
