@@ -1,0 +1,282 @@
+:root {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.5;
+  color: #1c1d21;
+  background-color: #f7f8fb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 24px clamp(16px, 5vw, 48px);
+  gap: 24px;
+}
+
+.app__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app__header h1 {
+  font-size: clamp(28px, 4vw, 40px);
+  margin: 0 0 8px;
+}
+
+.app__header p {
+  margin: 0;
+  max-width: 540px;
+  color: #4a4d57;
+}
+
+.app__main {
+  display: grid;
+  gap: 24px;
+  align-items: start;
+  grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+}
+
+@media (max-width: 1080px) {
+  .app__main {
+    grid-template-columns: 1fr;
+  }
+}
+
+.app__info {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 16px 40px rgba(41, 50, 100, 0.12);
+}
+
+.periodic-table {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.periodic-table__grid {
+  display: grid;
+  grid-template-columns: repeat(18, minmax(0, 1fr));
+  grid-auto-rows: 90px;
+  gap: 8px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 16px 40px rgba(41, 50, 100, 0.12);
+  position: relative;
+  overflow: hidden;
+}
+
+.periodic-table__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  padding: 16px 20px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 14px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 8px 24px rgba(41, 50, 100, 0.12);
+}
+
+.periodic-table__legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #3d4150;
+}
+
+.legend-swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 6px;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4), 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.legend-swatch--diatomic-nonmetal,
+.legend-swatch--polyatomic-nonmetal {
+  background: linear-gradient(135deg, #7cc2ff, #4f7cff);
+}
+
+.legend-swatch--noble-gas {
+  background: linear-gradient(135deg, #b58dff, #7862d8);
+}
+
+.legend-swatch--alkali-metal {
+  background: linear-gradient(135deg, #ff9e9e, #e36a6a);
+}
+
+.legend-swatch--alkaline-earth-metal {
+  background: linear-gradient(135deg, #ffd699, #ffac4a);
+}
+
+.legend-swatch--metalloid {
+  background: linear-gradient(135deg, #64e3b9, #21b385);
+}
+
+.legend-swatch--post-transition-metal {
+  background: linear-gradient(135deg, #95c5f2, #5b8ccf);
+}
+
+.legend-swatch--transition-metal {
+  background: linear-gradient(135deg, #8cc6ff, #4089d4);
+}
+
+.legend-swatch--lanthanide {
+  background: linear-gradient(135deg, #f69de3, #d864c2);
+}
+
+.legend-swatch--actinide {
+  background: linear-gradient(135deg, #ffa5c0, #f46389);
+}
+
+.element-button {
+  border: none;
+  border-radius: 16px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  color: #13141a;
+  background: linear-gradient(135deg, #edf0f9, #dce2f4);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.element-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(41, 50, 100, 0.18);
+  z-index: 1;
+}
+
+.element-button--selected {
+  outline: 3px solid rgba(58, 113, 255, 0.8);
+  outline-offset: 0;
+  box-shadow: 0 12px 24px rgba(58, 113, 255, 0.3);
+}
+
+.element-button__number {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(19, 20, 26, 0.6);
+}
+
+.element-button__symbol {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.element-button__name {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(19, 20, 26, 0.65);
+}
+
+.element-button--nonmetal {
+  background: linear-gradient(135deg, rgba(124, 194, 255, 0.25), rgba(79, 124, 255, 0.35));
+}
+
+.element-button--noble-gas {
+  background: linear-gradient(135deg, rgba(181, 141, 255, 0.25), rgba(120, 98, 216, 0.35));
+}
+
+.element-button--alkali {
+  background: linear-gradient(135deg, rgba(255, 158, 158, 0.28), rgba(227, 106, 106, 0.36));
+}
+
+.element-button--alkaline-earth {
+  background: linear-gradient(135deg, rgba(255, 214, 153, 0.28), rgba(255, 172, 74, 0.36));
+}
+
+.element-button--metalloid {
+  background: linear-gradient(135deg, rgba(100, 227, 185, 0.28), rgba(33, 179, 133, 0.36));
+}
+
+.element-button--post-transition {
+  background: linear-gradient(135deg, rgba(149, 197, 242, 0.28), rgba(91, 140, 207, 0.36));
+}
+
+.element-button--transition {
+  background: linear-gradient(135deg, rgba(140, 198, 255, 0.28), rgba(64, 137, 212, 0.36));
+}
+
+.element-button--lanthanide {
+  background: linear-gradient(135deg, rgba(246, 157, 227, 0.28), rgba(216, 100, 194, 0.36));
+}
+
+.element-button--actinide {
+  background: linear-gradient(135deg, rgba(255, 165, 192, 0.28), rgba(244, 99, 137, 0.36));
+}
+
+.element-button--unknown,
+.element-button--default {
+  background: linear-gradient(135deg, rgba(206, 214, 229, 0.4), rgba(144, 152, 173, 0.4));
+}
+
+.element-details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.element-details__header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.element-details__symbol {
+  width: 96px;
+  height: 96px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(58, 113, 255, 0.12), rgba(58, 113, 255, 0.28));
+  display: grid;
+  place-items: center;
+  font-size: 40px;
+  font-weight: 700;
+  color: #324388;
+}
+
+.element-details__meta {
+  margin: 4px 0 0;
+  color: rgba(19, 20, 26, 0.6);
+}
+
+.element-details__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.element-details__list dt {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: rgba(19, 20, 26, 0.55);
+  margin-bottom: 4px;
+}
+
+.element-details__list dd {
+  margin: 0;
+  font-weight: 600;
+  color: #1f253f;
+}
+
+.element-details__summary {
+  margin: 0;
+  color: #3d4150;
+  line-height: 1.6;
+}
