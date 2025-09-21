@@ -4,8 +4,11 @@ export default function ElementDetails({ element, categoryLabels }) {
   if (!element) {
     return (
       <div className="element-details">
-        <h2>Element seçin</h2>
-        <p>Soldaki tablodan bir elemente dokunarak bilgilerini görüntüleyin.</p>
+        <div className="element-details__empty">
+          <div className="element-details__empty-icon">🔬</div>
+          <h2>Element seçin</h2>
+          <p>Soldaki tablodan bir elemente dokunarak detaylı bilgilerini görüntüleyin.</p>
+        </div>
       </div>
     );
   }
@@ -16,28 +19,49 @@ export default function ElementDetails({ element, categoryLabels }) {
     <div className="element-details" key={element.number}>
       <div className="element-details__header">
         <div className="element-details__symbol">{element.symbol}</div>
-        <div>
+        <div className="element-details__header-info">
           <h2>{element.name}</h2>
-          <p className="element-details__meta">Atom Numarası: {element.number}</p>
+          <p className="element-details__meta">Atom Numarası: <strong>{element.number}</strong></p>
+          <div className="element-details__category-badge">
+            <span className={`category-badge category-badge--${element.category.replace(/\s+/g, '-')}`}>
+              {readableCategory}
+            </span>
+          </div>
         </div>
       </div>
-      <dl className="element-details__list">
-        <div>
-          <dt>Kategori</dt>
-          <dd>{readableCategory}</dd>
+      
+      <div className="element-details__properties">
+        <div className="element-details__properties-grid">
+          <div className="property-card">
+            <div className="property-card__icon">📊</div>
+            <div className="property-card__content">
+              <dt>Periyot</dt>
+              <dd>{element.period}</dd>
+            </div>
+          </div>
+          
+          <div className="property-card">
+            <div className="property-card__icon">📋</div>
+            <div className="property-card__content">
+              <dt>Grup</dt>
+              <dd>{element.group ?? '—'}</dd>
+            </div>
+          </div>
+          
+          <div className="property-card">
+            <div className="property-card__icon">🎯</div>
+            <div className="property-card__content">
+              <dt>Kategori</dt>
+              <dd>{readableCategory}</dd>
+            </div>
+          </div>
         </div>
-        <div>
-          <dt>Periyot</dt>
-          <dd>{element.period}</dd>
-        </div>
-        <div>
-          <dt>Grup</dt>
-          <dd>{element.group ?? '—'}</dd>
-        </div>
-      </dl>
-      <p className="element-details__summary">
-        {element.summary ?? 'Bu element için özet bilgisi mevcut değil.'}
-      </p>
+      </div>
+      
+      <div className="element-details__summary">
+        <h3>📖 Açıklama</h3>
+        <p>{element.summary ?? 'Bu element için özet bilgisi mevcut değil.'}</p>
+      </div>
     </div>
   );
 }

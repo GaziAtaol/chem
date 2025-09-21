@@ -16,13 +16,13 @@ const categoryClassMap = {
   'unknown, probably post-transition metal': 'element-button--unknown'
 };
 
-export default function ElementButton({ element, isSelected, onSelect }) {
+export default function ElementButton({ element, isSelected, isFiltered, onSelect }) {
   const categoryClass = categoryClassMap[element.category] ?? 'element-button--default';
 
   return (
     <button
       type="button"
-      className={`element-button ${categoryClass} ${isSelected ? 'element-button--selected' : ''}`}
+      className={`element-button ${categoryClass} ${isSelected ? 'element-button--selected' : ''} ${isFiltered ? 'element-button--filtered' : ''}`}
       onClick={() => onSelect(element.number)}
       title={`${element.number} - ${element.name}`}
       style={{ gridColumn: element.xpos, gridRow: element.ypos }}
@@ -44,9 +44,11 @@ ElementButton.propTypes = {
     ypos: PropTypes.number.isRequired
   }).isRequired,
   isSelected: PropTypes.bool,
+  isFiltered: PropTypes.bool,
   onSelect: PropTypes.func.isRequired
 };
 
 ElementButton.defaultProps = {
-  isSelected: false
+  isSelected: false,
+  isFiltered: false
 };
